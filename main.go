@@ -14,25 +14,18 @@ func init() {
 	flag.StringVar(&offset, "o", "", "pattern_offset")
 }
 
-func main() {
-	flag.Parse()
+func PatternOffset(offset, p string) {
+	println("In Pattern Offset")
+	//var patternCreated = PatternCreate(10)
+	//var patternCreated = "Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab"
 
-	if (offset == "" && create == 0) || (offset != "" && create != 0) {
-		println("./gottern -h for help")
-		os.Exit(0)
-	} else if offset == "" && create > 0 {
-		var patternCreated = PatternCreate(create)
-		println(patternCreated)
-	} else if offset != "" && create == 0 {
-		PatternOffset(offset)
-	} else {
-		println("./gottern -h for help")
-		os.Exit(0)
-	}
+	//println(p)
+	//i := strings.Index(p, offset)
+	//println(i)
 }
 
-func PatternCreate(lenght int) (patternCreated string) {
-
+func PatternCreate(lenght int) string {
+	//println("Jere")
 	UpperCase := "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	LowerCase := "abcdefghijklmnopqrstuvwxyz"
 	Numbers := "0123456789"
@@ -58,6 +51,27 @@ func PatternCreate(lenght int) (patternCreated string) {
 	return strings.Join(pattern, "")
 }
 
-func PatternOffset(offset string) {
-	println("TODO")
+func main() {
+	flag.Parse()
+
+	if (offset == "" && create == 0) || (offset != "" && create != 0) {
+		println("./gottern -h for help")
+		os.Exit(0)
+	} else if offset == "" && create > 0 {
+		var patternCreated = PatternCreate(create)
+		//var patternCreated = PatternCreate(10)
+		println(patternCreated)
+	} else if offset != "" && create == 0 {
+		if len(offset) < 4 {
+			println("Offset should be at least 4 bytes")
+			os.Exit(0)
+		}
+		var i = 10
+		p := PatternCreate(i)
+		println(len(p))
+		PatternOffset(offset, p)
+	} else {
+		println("./gottern -h for help")
+		os.Exit(0)
+	}
 }
