@@ -1,4 +1,10 @@
-# Gottern
+![](img/Gottern_banner.png)
+
+[![GitHub Issues](https://img.shields.io/github/issues/joanbono/gottern.svg)](https://github.com/gocaio/goca/issues)
+[![GitHub tag](https://img.shields.io/github/tag/joanbono/gottern.svg)](https://github.com/gocaio/goca/tags)
+[![Go Version](https://img.shields.io/badge/go-1.11-blue.svg?logo=go)](https://golang.org/dl/)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+
 Golang port for Metasploit's `pattern_create` and `pattern_offset`.  
 Based on [`haxpattern`](https://github.com/DharmaOfCode/haxpattern)
 
