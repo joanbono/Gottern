@@ -14,24 +14,24 @@ func init() {
 	flag.StringVar(&offset, "o", "", "pattern_offset")
 }
 
-func PatternOffset(offset, p string) {
-	println("In Pattern Offset")
-	//var patternCreated = PatternCreate(10)
-	//var patternCreated = "Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab"
-
-	//println(p)
-	//i := strings.Index(p, offset)
-	//println(i)
+func PatternOffset(offset string) {
+	var maxPattern string
+	maxPattern = PatternCreate(20280)
+	i := strings.Index(maxPattern, offset)
+	//println("Offset found at ", i)
+	println("[*]", i)
+	//println("Offset len: ", len(offset))
+	//s := maxPattern[i : i+len(offset)]
+	//println(s)
 }
 
 func PatternCreate(lenght int) string {
-	//println("Jere")
 	UpperCase := "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	LowerCase := "abcdefghijklmnopqrstuvwxyz"
 	Numbers := "0123456789"
 
 	var pattern []string
-	for len(pattern) < create {
+	for len(pattern) < lenght {
 		for _, A0 := range UpperCase {
 			for _, a0 := range LowerCase {
 				for _, n0 := range Numbers {
@@ -66,10 +66,7 @@ func main() {
 			println("Offset should be at least 4 bytes")
 			os.Exit(0)
 		}
-		var i = 10
-		p := PatternCreate(i)
-		println(len(p))
-		PatternOffset(offset, p)
+		PatternOffset(offset)
 	} else {
 		println("./gottern -h for help")
 		os.Exit(0)

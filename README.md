@@ -16,6 +16,19 @@ Usage of haxpattern.exe:
  
  ```bash
  $ gottern -c 200
-
 Aa0Aa1Aa2Aa3Aa4[...]Ag1Ag2Ag3Ag4Ag5Ag
 ```
+
+## Look for an offset
+
+```
+$ gottern -o 6Aj7
+[*] 290
+```
+
+***
+
+## TODO
+
+- [ ] Add Little/Big endian option
+- [ ] Look for hex pair in offset
