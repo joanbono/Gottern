@@ -10,7 +10,7 @@ Usage of haxpattern.exe:
    -o string   pattern_offset
  ```
  
- ## Create a pattern 
+### Create a pattern 
 
  Create a pattern using the `-c` flag with the size of the pattern to be created.
  
@@ -19,16 +19,23 @@ Usage of haxpattern.exe:
 Aa0Aa1Aa2Aa3Aa4[...]Ag1Ag2Ag3Ag4Ag5Ag
 ```
 
-## Look for an offset
+### Look for an offset
 
 ```
 $ gottern -o 6Aj7
+[*] 290
+$ gottern -o 0x36416a37
 [*] 290
 ```
 
 ***
 
-## TODO
+## Benchmarks
 
-- [ ] Add Little/Big endian option
-- [ ] Look for hex pair in offset
+### Create a Pattern
+
+![](img/benchmark_create.png) 
+
+### Find an offset
+
+![](img/benchmark_offset.png) 
