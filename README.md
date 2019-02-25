@@ -4,6 +4,8 @@
 [![GitHub tag](https://img.shields.io/github/tag/joanbono/gottern.svg)](https://github.com/joanbono/gottern/tags)
 [![Go Version](https://img.shields.io/badge/go-1.11-blue.svg?logo=go)](https://golang.org/dl/)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+[![Go Report Card](https://goreportcard.com/badge/github.com/joanbono/gottern)](https://goreportcard.com/report/github.com/joanbono/gottern)
+
 
 Golang port for Metasploit's `pattern_create` and `pattern_offset`.  
 Based on [`haxpattern`](https://github.com/DharmaOfCode/haxpattern)
@@ -36,6 +38,9 @@ $ gottern -o 0x36416a37
 [*] 290
 # Little Endian HEX
 $ gottern -o 376a4136
+[*] 290
+# Big Endian HEX
+$ gottern -o 36416a37 -b
 [*] 290
 ```
 

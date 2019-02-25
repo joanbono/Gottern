@@ -26,23 +26,33 @@ import (
 
 var offset string
 var create int
+var bigendian bool
 
 func init() {
 	flag.IntVar(&create, "c", 0, "pattern_create")
 	flag.StringVar(&offset, "o", "", "pattern_offset")
+	flag.BoolVar(&bigendian, "b", false, "Big Endian")
+
+	flag.Parse()
 }
 
+// PatternOffset looks for ASCII string
+// inside the pattern
 func PatternOffset(offset string) {
 	var maxPattern string
 	maxPattern = PatternCreate(20280)
 	i := strings.Index(maxPattern, offset)
-	if i == -1 {
+	if i == -1 && bigendian == false {
 		PatternLittleEndian(offset)
+	} else if i == -1 && bigendian == true {
+		PatternOffsetHex(offset)
 	} else {
 		println("[*]", i)
 	}
 }
 
+// PatternLittleEndian changes the offset
+// in plain HEX to Little Endian format
 func PatternLittleEndian(offset string) {
 	var offsetLE string
 	if len(offset) >= 8 {
@@ -53,6 +63,9 @@ func PatternLittleEndian(offset string) {
 	}
 }
 
+// PatterOffsetHex will look for the offset
+// in the pattern if starts by 0x or its
+// HEX in Little Endian format
 func PatternOffsetHex(offset string) {
 	var maxPatternHex string
 	var offsetAscii []byte
@@ -77,23 +90,25 @@ func PatternOffsetHex(offset string) {
 	}
 }
 
-func PatternCreate(lenght int) string {
+// PatterCreate will just create the Pattern
+// with [A-Za-z0-9]
+func PatternCreate(length int) string {
 	UpperCase := "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	LowerCase := "abcdefghijklmnopqrstuvwxyz"
 	Numbers := "0123456789"
 
 	var pattern []string
-	for len(pattern) < lenght {
+	for len(pattern) < length {
 		for _, A0 := range UpperCase {
 			for _, a0 := range LowerCase {
 				for _, n0 := range Numbers {
-					if len(pattern) < lenght {
+					if len(pattern) < length {
 						pattern = append(pattern, string(A0))
 					}
-					if len(pattern) < lenght {
+					if len(pattern) < length {
 						pattern = append(pattern, string(a0))
 					}
-					if len(pattern) < lenght {
+					if len(pattern) < length {
 						pattern = append(pattern, string(n0))
 					}
 				}
@@ -103,8 +118,8 @@ func PatternCreate(lenght int) string {
 	return strings.Join(pattern, "")
 }
 
+// main function to execute the program
 func main() {
-	flag.Parse()
 
 	if (offset == "" && create == 0) || (offset != "" && create != 0) {
 		println("[i] ./gottern -h for help")
