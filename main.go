@@ -37,21 +37,37 @@ func PatternOffset(offset string) {
 	maxPattern = PatternCreate(20280)
 	i := strings.Index(maxPattern, offset)
 	if i == -1 {
-		println("[*] Offset not found")
+		PatternLittleEndian(offset)
 	} else {
 		println("[*]", i)
 	}
 }
 
+func PatternLittleEndian(offset string) {
+	var offsetLE string
+	if len(offset) >= 8 {
+		offsetLE = offset[6:8] + offset[4:6] + offset[2:4] + offset[0:2]
+		PatternOffsetHex(offsetLE)
+	} else {
+		println("[*] Offset not found")
+	}
+}
+
 func PatternOffsetHex(offset string) {
 	var maxPatternHex string
+	var offsetAscii []byte
+	var j int
+	var err error
 	maxPatternHex = PatternCreate(20280)
-	offsetAscii, err := hex.DecodeString(offset[2:])
-	if err != nil {
-		println("[-] Invalid hex offset")
-		os.Exit(0)
+	if offset[:2] == "0x" {
+		offsetAscii, err = hex.DecodeString(offset[2:])
 	} else {
-		j := strings.Index(maxPatternHex, string(offsetAscii))
+		offsetAscii, err = hex.DecodeString(offset)
+	}
+	if err != nil {
+		println("[-] Invalid offset")
+	} else {
+		j = strings.Index(maxPatternHex, string(offsetAscii))
 
 		if j == -1 {
 			println("[*] Offset not found")
@@ -95,7 +111,6 @@ func main() {
 		os.Exit(0)
 	} else if offset == "" && create > 0 {
 		var patternCreated = PatternCreate(create)
-		//var patternCreated = PatternCreate(10)
 		println(patternCreated)
 	} else if offset != "" && create == 0 {
 		if len(offset) < 4 || (len(offset) < 10 && offset[:2] == "0x") {

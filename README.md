@@ -27,10 +27,15 @@ Aa0Aa1Aa2Aa3Aa4[...]Ag1Ag2Ag3Ag4Ag5Ag
 
 ### Look for an offset
 
-```
+```bash
+# ASCII 
 $ gottern -o 6Aj7
 [*] 290
+# Plain HEX
 $ gottern -o 0x36416a37
+[*] 290
+# Little Endian HEX
+$ gottern -o 376a4136
 [*] 290
 ```
 
