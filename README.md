@@ -14,7 +14,7 @@ Based on [`haxpattern`](https://github.com/DharmaOfCode/haxpattern)
 
 ```bash
 $ gottern -h
-Usage of haxpattern.exe:
+Usage of gottern:
     -b	        Big Endian
     -c int      pattern_create
     -o string   pattern_offset
