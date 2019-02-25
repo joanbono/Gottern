@@ -25,8 +25,8 @@ release: darwin linux windows
 
 .PHONY: install
 install: 
-	go build -o ${BINARY}
-	mv ${BINARY} $(GOPATH)/bin
+	go build -o $(BINARY)
+	mv $(BINARY) $(GOPATH)/bin
 
 .PHONY: dev
 dev: darwin-dev linux-dev windows-dev
