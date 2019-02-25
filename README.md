@@ -11,12 +11,14 @@ Golang port for Metasploit's `pattern_create` and `pattern_offset`.
 Based on [`haxpattern`](https://github.com/DharmaOfCode/haxpattern)
 
 ## Usage
-```
+
+```bash
 $ gottern -h
 Usage of haxpattern.exe:
-   -c int 	   pattern_create
-   -o string   pattern_offset
- ```
+    -b	        Big Endian
+    -c int      pattern_create
+    -o string   pattern_offset
+```
  
 ### Create a pattern 
 
