@@ -152,3 +152,4 @@ build/*
 # rsrc syso output
 *.syso
 go.mod
+go.sum

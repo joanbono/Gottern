@@ -15,30 +15,48 @@
  under the License.
 */
 
-package main
+package cmd
 
 import (
 	"encoding/hex"
-	"flag"
+	"fmt"
 	"os"
 	"strings"
+
+	"github.com/spf13/cobra"
 )
 
-var offset string
-var create int
-var bigendian bool
+// offsetCmd represents the offset command
+var offsetCmd = &cobra.Command{
+	Use:   "offset",
+	Short: "Search for an offset",
+	Run: func(cmd *cobra.Command, args []string) {
+		offset, err := cmd.Flags().GetString("query")
+		CheckErr(err)
+		bigendian, err := cmd.Flags().GetBool("bigendian")
+		CheckErr(err)
+
+		if len(offset) < 4 || (len(offset) < 10 && offset[:2] == "0x") {
+			fmt.Printf("\n[i] ./gottern offset -h for help\n\n")
+			os.Exit(0)
+		} else if offset[:2] == "0x" {
+			PatternOffsetHex(offset)
+		} else {
+			PatternOffset(offset, bigendian)
+		}
+	},
+}
 
 func init() {
-	flag.IntVar(&create, "c", 0, "pattern_create")
-	flag.StringVar(&offset, "o", "", "pattern_offset")
-	flag.BoolVar(&bigendian, "b", false, "Big Endian")
-
-	flag.Parse()
+	rootCmd.AddCommand(offsetCmd)
+	offsetCmd.PersistentFlags().StringP("query", "q", "", "Query the following pattern. Minimum 4 bytes.")
+	offsetCmd.PersistentFlags().BoolP("bigendian", "b", false, "Search for Big Endian Offset")
+	offsetCmd.MarkFlagRequired("length")
 }
 
 // PatternOffset looks for ASCII string
 // inside the pattern
-func PatternOffset(offset string) {
+func PatternOffset(offset string, bigendian bool) {
 	var maxPattern string
 	maxPattern = PatternCreate(20280)
 	i := strings.Index(maxPattern, offset)
@@ -47,7 +65,7 @@ func PatternOffset(offset string) {
 	} else if i == -1 && bigendian == true {
 		PatternOffsetHex(offset)
 	} else {
-		println("[*]", i)
+		fmt.Printf("[*] %v\n", i)
 	}
 }
 
@@ -87,57 +105,5 @@ func PatternOffsetHex(offset string) {
 		} else {
 			println("[*]", j)
 		}
-	}
-}
-
-// PatterCreate will just create the Pattern
-// with [A-Za-z0-9]
-func PatternCreate(length int) string {
-	UpperCase := "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-	LowerCase := "abcdefghijklmnopqrstuvwxyz"
-	Numbers := "0123456789"
-
-	var pattern []string
-	for len(pattern) < length {
-		for _, A0 := range UpperCase {
-			for _, a0 := range LowerCase {
-				for _, n0 := range Numbers {
-					if len(pattern) < length {
-						pattern = append(pattern, string(A0))
-					}
-					if len(pattern) < length {
-						pattern = append(pattern, string(a0))
-					}
-					if len(pattern) < length {
-						pattern = append(pattern, string(n0))
-					}
-				}
-			}
-		}
-	}
-	return strings.Join(pattern, "")
-}
-
-// main function to execute the program
-func main() {
-
-	if (offset == "" && create == 0) || (offset != "" && create != 0) {
-		println("[i] ./gottern -h for help")
-		os.Exit(0)
-	} else if offset == "" && create > 0 {
-		var patternCreated = PatternCreate(create)
-		println(patternCreated)
-	} else if offset != "" && create == 0 {
-		if len(offset) < 4 || (len(offset) < 10 && offset[:2] == "0x") {
-			println("[!] Offset should be at least 4 bytes")
-			os.Exit(0)
-		} else if offset[:2] == "0x" {
-			PatternOffsetHex(offset)
-		} else {
-			PatternOffset(offset)
-		}
-	} else {
-		println("[i] ./gottern -h for help")
-		os.Exit(0)
 	}
 }
